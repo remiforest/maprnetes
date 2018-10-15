@@ -1,0 +1,4 @@
+---
+# Install YARN Resource Manager
+- name: Install mapr-resourcemanager
+  package: name=mapr-resourcemanager state=present

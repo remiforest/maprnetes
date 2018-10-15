@@ -1,0 +1,9 @@
+---
+# Install Apache Drill on YARN
+
+- name: Install mapr-drill-yarn
+  package: name=mapr-drill-yarn state=present
+
+# Other actions
+- name: Set owner mapr-system user
+  file: path=/opt/mapr/drill owner={{ mapr_user }} group={{ mapr_group }} state=directory recurse=yes

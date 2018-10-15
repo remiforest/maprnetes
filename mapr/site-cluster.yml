@@ -1,0 +1,7 @@
+- import_playbook: sites/common.yml
+- import_playbook: sites/mapr-precheck.yml
+- import_playbook: sites/mapr-repository.yml
+- import_playbook: sites/mapr-core.yml
+- import_playbook: sites/mapr-mep-all.yml
+- import_playbook: sites/mapr-unprovision.yml
+

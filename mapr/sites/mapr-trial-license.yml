@@ -1,0 +1,5 @@
+---
+- name: Setup Trial License
+  hosts: mapr-cldb[0]
+  roles:
+    - ../roles/mapr-trial-license

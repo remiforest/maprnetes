@@ -1,0 +1,19 @@
+---
+# Install NFS
+
+- name: Install mapr-nfs
+  vars:
+    packages_Suse: ['mapr-nfs', 'nfs-utils', 'rpcbind']
+    packages_RedHat: ['mapr-nfs', 'nfs-utils', 'rpcbind']
+    packages_Debian: ['mapr-nfs', 'nfs-common', 'rpcbind']
+  package: name={{ item }} state=present
+  with_items: "{{ vars['packages_' + ansible_os_family] }}"
+
+# Other actions
+- name: Create /mapr dir
+  file: path=/mapr state=directory
+- name: Configure mapr_fstab for NFS
+  template: src=mapr_fstab dest=/opt/mapr/conf/mapr_fstab
+
+
+

@@ -1,0 +1,4 @@
+---
+# Install YARN Node Manager
+- name: Install mapr-nodemanager
+  package: name=mapr-nodemanager state=present

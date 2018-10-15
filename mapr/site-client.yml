@@ -1,0 +1,79 @@
+- name: Apply common configuration to all nodes
+  hosts: all
+  tasks:
+    - set_fact: client_install="true"
+- name: Apply common configuration to all nodes
+  hosts: common
+  roles:
+    - {role: common-oraclejdk18, when: jdk == 'oraclejdk'}
+    - {role: common-openjdk18, when: jdk == 'openjdk18'}
+    - {role: common-mapruser, when: mapr_create_user}
+    - common-rpcbind
+    - common-ntp
+    - common-misc
+    - common-sysctl
+- name: Fetch files from cluster required for client
+  hosts: mapr-cldb[0]
+  roles:
+    - {role: mapr-client-configure-fetch-keys, when: mapr_security != 'none'}
+    - mapr-client-configure-nativesecurity-fetch
+- name: Setup global vars
+  hosts: all
+  roles:
+- name: Setup global vars
+  hosts: all
+  roles:
+    - mapr-global-vars
+    - mapr-configure-vars-zk
+    - mapr-configure-vars-cldb
+- name: Install MapR client
+  hosts: mapr-client
+  roles:
+    - mapr-configure-repository
+    - mapr-client-install
+    - mapr-configure-subnets
+    - {role: mapr-client-configure-unsecure, when: mapr_security == 'none'}
+    - {role: mapr-client-configure-nativesecurity-secure, when: mapr_security != 'none'}
+- name: Setup Hive Variables
+  hosts: all
+  roles:
+    - mapr-hive-vars
+- name: Install Hive CLI
+  hosts: mapr-hive-cli
+  roles:
+    - mapr-hive-cli-install
+- name: Install Kafka
+  hosts: mapr-kafka
+  roles:
+    - mapr-kafka-install
+- name: Install Spark on YARN
+  hosts: mapr-spark-yarn
+  roles:
+    - mapr-spark-yarn-install
+- name: Install Flume
+  hosts: mapr-flume
+  roles:
+    - mapr-flume-install
+- name: Install HBase CLI
+  hosts: mapr-hbase-cli
+  roles:
+    - mapr-hbase-cli-install
+- name: Install Pig
+  hosts: mapr-pig
+  roles:
+    - mapr-pig-install
+- name: Install NFS loopback
+  hosts: mapr-nfsloopback
+  roles:
+    - mapr-nfsloopback-install
+- name: Install mapr-posix-client-basic (FUSE)
+  hosts: mapr-posix-client-basic
+  roles:
+    - mapr-posix-client-basic-install
+    - {role: mapr-patch-posix-client-basic-install, when: mapr_patch_url is defined and ansible_os_family != 'Debian'}
+
+- name: Install mapr-posix-client-platinum (FUSE)
+  hosts: mapr-posix-client
+  roles:
+    - mapr-posix-client-platinum-install
+    - {role: mapr-patch-posix-client-platinum-install, when: mapr_patch_url is defined and ansible_os_family != 'Debian'}

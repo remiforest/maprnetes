@@ -1,0 +1,4 @@
+---
+# Install Pig
+- name: Install mapr-pig
+  package: name=mapr-pig state=present

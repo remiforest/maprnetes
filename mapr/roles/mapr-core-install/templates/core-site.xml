@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<configuration>
+    <!-- :::CAUTION::: DO NOT EDIT ANYTHING ON OR ABOVE THIS LINE -->
+    <!-- property>
+        <name>fs.s3n.awsAccessKeyId</name>
+        <value>key</value>
+        <description>AWS access key ID.
+            Omit for IAM role-based or provider-based authentication.</description>
+    </property>
+
+    <property>
+        <name>fs.s3n.awsSecretAccessKey</name>
+        <value>key</value>
+        <description>AWS secret key.
+            Omit for IAM role-based or provider-based authentication.</description>
+    </property -->
+    <property>
+        <name>hadoop.proxyuser.{{ mapr_user }}.groups</name>
+        <value>*</value>
+        <description>Allow the superuser mapr to impersonate any member of any group</description>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.{{ mapr_user }}.hosts</name>
+        <value>*</value>
+        <description>The superuser can connect from any host to impersonate a user</description>
+    </property>
+    <property>
+        <name>hue.kerberos.principal.shortname</name>
+        <value>mapr</value>
+    </property>
+    <property>
+        <name>hbase.table.namespace.mappings</name>
+        <value>*:/</value>
+    </property>
+    {% if mapr_security != "none" %}
+    <property>
+        <name>hadoop.rpc.protection</name>
+        <value>privacy</value>
+    </property>
+    {% endif %}
+</configuration>
+

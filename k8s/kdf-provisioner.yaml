@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mapr-kdfprovisioner
+  namespace: mapr-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mapr-kdfprovisioner
+  template:
+    metadata:
+      labels:
+        app: mapr-kdfprovisioner
+    spec:
+      serviceAccountName: maprkdf
+      containers:
+      - name: mapr-kdfprovisioner
+        image: maprtech/kdf-provisioner:1.0.0.008_centos7
+        imagePullPolicy: Always
+        command:
+        - /maprfs-provisioner
+        volumeMounts:
+        - mountPath: /etc/localtime
+          name: timezone
+          readOnly: true
+        - mountPath: /opt/mapr/logs
+          name: logs
+      volumes:
+      - name: timezone
+        hostPath:
+          path: /etc/localtime
+      - name: logs
+        hostPath:
+          path: /opt/mapr/logs

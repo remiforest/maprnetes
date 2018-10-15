@@ -1,0 +1,4 @@
+---
+# Install Sqoop2 Client
+- name: Install mapr-sqoop2-client
+  package: name=mapr-sqoop2-client state=present

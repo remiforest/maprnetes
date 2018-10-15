@@ -1,0 +1,11 @@
+---
+- name: Install NTP
+  package: name=ntp state=present
+
+- name: Start the ntp service
+  vars:
+    service_Suse: ntpd
+    service_RedHat: ntpd
+    service_Debian: ntp
+  service: name="{{ vars['service_' + ansible_os_family] }}" state=started enabled=yes
+

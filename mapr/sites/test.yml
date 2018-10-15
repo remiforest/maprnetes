@@ -1,0 +1,5 @@
+- import_playbook: mapr-include-vars.yml
+- name: Install MapR Core
+  hosts: mapr-kibana
+  roles:
+    - ../roles/mapr-kibana-install

@@ -1,0 +1,14 @@
+---
+# Install mapr-posix-client-platinum
+- name: Install mapr-posix-client-platinum
+  package: name={{ item }} state=present
+  with_items:
+  - mapr-posix-client-platinum
+  - rpcbind
+- name: Set /opt/mapr/conf/mapruserticket in fuse.conf
+  lineinfile: dest=/opt/mapr/conf/fuse.conf regexp="^fuse\.ticketfile\.location" line="fuse.ticketfile.location=/opt/mapr/conf/mapruserticket"
+# Other actions
+- name: Create /mapr dir
+  file: path=/mapr state=directory
+- name: Start the mapr-posix-client-platinum service
+  service: name=mapr-posix-client-platinum state=restarted enabled=yes

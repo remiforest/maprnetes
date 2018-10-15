@@ -1,0 +1,41 @@
+---
+# Install Spark on YARN
+- name: Install mapr-spark
+  package: name=mapr-spark state=present
+- name: Configure.sh -R (force first generation, to avoid that file will be overridden later)
+  shell: /opt/mapr/server/configure.sh -R
+  when: client_install is not defined
+- name: Find Spark Path
+  find: paths="/opt/mapr/spark" patterns="spark*" file_type=directory
+  register: spark_path_result
+  failed_when: spark_path_result.matched != 1
+- set_fact: spark_path="{{ spark_path_result.files[0].path }}"
+- name: Copy hive-site.xml to Spark (otherwise Spark startup throws errors)
+  template: src=hive-site.xml dest={{ spark_path }}/conf/hive-site.xml  mode=0644
+# Other actions
+- name: Create maprfs:///apps/spark/logs
+  shell: hadoop fs -mkdir -p /apps/spark/logs
+  environment:
+    MAPR_TICKETFILE_LOCATION: /opt/mapr/conf/mapruserticket
+  when: inventory_hostname == groups["mapr-spark-yarn"][0]
+- name: Owner maprfs:///apps/spark
+  shell: hadoop fs -chown -R {{ mapr_user }}:{{ mapr_group }} /apps/spark
+  environment:
+    MAPR_TICKETFILE_LOCATION: /opt/mapr/conf/mapruserticket
+  when: inventory_hostname == groups["mapr-spark-yarn"][0]
+- name: Set owner mapr-system user
+  file: path=/opt/mapr/spark owner={{ mapr_user }} group={{ mapr_group }} state=directory recurse=yes
+
+- name: Write Spark spark-defaults.conf
+  template: src=spark-defaults.conf dest={{ spark_path }}/conf/spark-defaults.conf mode=0644
+- name: Making Zip of Spark Jars | for Spark
+  archive:
+    path: "{{ spark_path }}/jars/"
+    dest: "{{ spark_path }}/spark-jars.zip"
+    format: zip
+  when: client_install is not defined and inventory_hostname == groups["mapr-spark-yarn"][0]
+- name: Uploading Spark jars to MaprFS | for Spark
+  shell: "hadoop fs -put -f {{ spark_path }}/spark-jars.zip /apps/spark"
+  environment:
+      MAPR_TICKETFILE_LOCATION: /opt/mapr/conf/mapruserticket
+  when: client_install is not defined and inventory_hostname == groups["mapr-spark-yarn"][0]

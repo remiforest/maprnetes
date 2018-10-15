@@ -1,0 +1,25 @@
+- import_playbook: mapr-include-vars.yml
+- name: Install Kafka
+  hosts: mapr-kafka
+  roles:
+    - ../roles/mapr-kafka-install
+- name: Uninstall Kafka
+  hosts: all:!mapr-kafka
+  roles:
+    - ../roles/mapr-kafka-uninstall
+- name: Install Kafka Connect JDBC
+  hosts: mapr-kafka-connect-jdbc
+  roles:
+    - ../roles/mapr-kafka-connect-jdbc-install
+- name: Uninstall Kafka Connect JDBC
+  hosts: all:!mapr-kafka-connect-jdbc
+  roles:
+    - ../roles/mapr-kafka-connect-jdbc-uninstall
+- name: Install Kafka REST
+  hosts: mapr-kafka-rest
+  roles:
+    - ../roles/mapr-kafka-rest-install
+- name: Uninstall Kafka REST
+  hosts: all:!mapr-kafka-rest
+  roles:
+    - ../roles/mapr-kafka-rest-uninstall

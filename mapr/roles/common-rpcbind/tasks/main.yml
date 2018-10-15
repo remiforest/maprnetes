@@ -1,0 +1,7 @@
+---
+- name: Install RPC bind
+  package: name=rpcbind state=present
+
+# Other actions
+- name: Start the RPC bind service
+  service: name=rpcbind state=started enabled=yes

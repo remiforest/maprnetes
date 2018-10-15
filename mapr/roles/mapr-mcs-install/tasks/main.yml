@@ -1,0 +1,4 @@
+---
+# Install MapR Control System (MCS)
+- name: Install mapr-webserver
+  package: name=mapr-webserver state=present
