@@ -36,7 +36,7 @@ spec:
               cpu: "500m"
           env:
           - name : KUBERNETES_SERVICE_LOCATION
-            value: "changeme!:6443"
+            value: "127.0.0.1:6443"
           - name : FLEXVOLUME_PLUGIN_PATH
             value: "/usr/libexec/kubernetes/kubelet-plugins/volume/exec"
           volumeMounts:

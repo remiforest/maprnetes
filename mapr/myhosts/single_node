@@ -4,7 +4,7 @@
 
 # ALIASES does NOT work with ROLLING upgrades!
 [all]
-node1 ansible_host=10.0.0.11 ansible_user=root
+node1 ansible_host=127.0.0.1 ansible_user=root
 
 [unprovision]
 
@@ -46,6 +46,7 @@ node1
 
 # Job History Server, IMPORTANT: only one
 [mapr-historyserver]
+#node1
 
 # MySQL, required for Hive MetaStore and Oozie, IMPORTANT: only one
 [ext-mysql]
@@ -53,12 +54,15 @@ node1
 
 # Spark on YARN
 [mapr-spark-yarn]
+#node1
 
 # Spark ThriftServer
 [mapr-spark-thriftserver]
+#node1
 
 # Spark HistoryServer
 [mapr-spark-historyserver]
+#node1
 
 # NFS
 [mapr-nfs]
@@ -66,9 +70,11 @@ node1
 
 # MapR Fuse Posix Client Basic
 [mapr-posix-client-basic]
+#node1
 
 # MapR Fuse Posix Client Platinum
 [mapr-posix-client-platinum]
+#node1
 
 # Apache Drill
 [mapr-drill-standalone]
@@ -76,15 +82,19 @@ node1
 
 # Apache Drill
 [mapr-drill-yarn]
+#node1
 
 # Flume
 [mapr-flume]
+#node1
 
 # HBase CLI
 [mapr-hbase-cli]
+#node1
 
 # HBase REST and Thrift
 [mapr-hbase-thrift-rest]
+#node1
 
 # Hive CLI
 [mapr-hive-cli]
@@ -100,35 +110,48 @@ node1
 
 # Hive WebHCat
 [mapr-hive-webhcat]
+#node1
 
 # HttpFS
 [mapr-httpfs]
+#node1
 
+# Hue
 [mapr-hue]
+#node1
 
 # Sqoop1
 [mapr-sqoop1]
+#node1
 
 # Sqoop2 Server
 [mapr-sqoop2-server]
+#node1
 
 # Sqoop2 Client
 [mapr-sqoop2-client]
+#node1
 
 # Pig
 [mapr-pig]
+#node1
 
 # Oozie
 [mapr-oozie]
+#node1
 
 # File Migrate Service
 [mapr-filemigrate]
+#node1
 
 [mapr-impala-server]
+#node1
 
 [mapr-impala-catalog]
+#node1
 
 [mapr-impala-statestore]
+#node1
 
 [mapr-kafka-connect-jdbc]
 #node1
@@ -141,22 +164,28 @@ node1
 
 # CollectD
 [mapr-collectd:children]
+#node1
 
 # OpenTSDB
 [mapr-opentsdb]
+#node1
 
 # Custom OpenTSDB, do NOT install on same node as mapr-opentsdb
 [mapr-opentsdb-custom]
 
 # Grafana
 [mapr-grafana]
+#node1
 
 # FluentD
 [mapr-fluentd:children]
+#node1
 
 # ElasticSearch
 [mapr-elasticsearch]
+#node1
 
 # Kibana
 [mapr-kibana]
+#node1
 
